@@ -1,8 +1,8 @@
-import { Poppins, Inter } from 'next/font/google';  // Fix the import statement for Poppins
+import { Poppins } from 'next/font/google';  // Fix the import statement for Poppins
 import './globals.css';
 
-const inter = Inter({ subsets: ['latin'] });
-const poppins = Poppins({ subsets: ['latin'],weight:"700" });  // Initialize Poppins font
+// const inter = Inter({ subsets: ['latin'] });
+const poppins = Poppins({ subsets: ['latin'],weight:"700",display:'auto' });  // Initialize Poppins font
 
 export const metadata = {
   title: 'Create Next App',
@@ -12,7 +12,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" data-theme="valentine">
-      <body className={`${inter.className} ${poppins.className}`}>{children}</body>
+      <body className={` ${poppins.className}`}>{children}</body>
     </html>
   );
 }

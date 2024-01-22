@@ -2,6 +2,7 @@ import BtnOutLarge from '@/components/Buttons/BtnOutLarge'
 import Foooter from '@/components/Landing/Foooter'
 import Lund from '@/components/Landing/Lund'
 import React from 'react'
+import router from 'next/navigation'
 
 const Landing = () => {
   return (

@@ -2,6 +2,7 @@ import React from 'react'
 import LoginBtn from '../Buttons/LoginBtn'
 import SignBtn from '../Buttons/SignBtn'
 import BtnTextGhost from '../Buttons/BtnTextGhost'
+import Link from 'next/link'
 
 const Lund = () => {
   return (
@@ -30,7 +31,10 @@ const Lund = () => {
        
 
         <div className='SignUP mt-3'>
-        <SignBtn/>
+          <Link href='/SignUp'>
+          <SignBtn/>
+          </Link>
+        
         </div>
 
       </div>
