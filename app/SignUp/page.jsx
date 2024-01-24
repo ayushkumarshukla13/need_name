@@ -1,11 +1,11 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { useRouter } from 'next/navigation'
+// import { useRouter } from 'next/navigation'
 const page = () => {
-    const router = useRouter();
+    // const router = useRouter();
 
-    const [user, setUser] = React.useState({
+    const [user, setUser] = useState({
         email: "",
         password: "",
         username: "",
@@ -20,6 +20,7 @@ const page = () => {
             setLoading(true);
             const response = await axios.post("/api/users/signup", user);
             console.log("Signup success", response.data);
+
             // router.push("/login");
 
         } catch (error) {
@@ -69,20 +70,22 @@ const page = () => {
                                     className="input input-bordered" required />
                             </div>
 
-                            <div className="form-control">
+                            <div className="form-control " >
 
                                 <label className="label">
-                                    <span className="label-text">Email</span>
+                                    <span className="label-text" >Email</span>
                                 </label>
                                 <input id='email' value={user.email}
                                     onChange={(e) => setUser({ ...user, email: e.target.value })}
 
                                     type="email" placeholder="we don't spam" className="input input-bordered" required />
+                                
                             </div>
+
 
                             <div className="form-control">
                                 <label className="label">
-                                    <span className="label-text">Password</span>
+                                    <span className="label-text tooltip" data-tip="Min 8 Chars, 1 special Char">Password</span>
                                 </label>
                                 <input id='password' value={user.password}
                                     onChange={(e) => setUser({ ...user, password: e.target.value })}
@@ -97,7 +100,7 @@ const page = () => {
                             <div className="form-control mt-6">
                                 <button
                                     onClick={onSignup}
-                                    className="btn btn-primary">{buttonDisabled ? "Fill the form" : "SignUp"}</button>
+                                    className="btn btn-primary" disabled={buttonDisabled}>{buttonDisabled ? "Fill the form" : "SignUp"}</button>
                             </div>
                         </div>
                     </div>
