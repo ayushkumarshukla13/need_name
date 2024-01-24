@@ -1,6 +1,47 @@
-import React from 'react'
-
+'use client'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
+import { useRouter } from 'next/navigation'
 const page = () => {
+    const router = useRouter();
+
+    const [user, setUser] = React.useState({
+        email: "",
+        password: "",
+        username: "",
+    })
+
+
+    const [buttonDisabled, setButtonDisabled] = useState(false);
+    const [loading, setLoading] = useState(false);
+
+    const onSignup = async () => {
+        try {
+            setLoading(true);
+            const response = await axios.post("/api/users/signup", user);
+            console.log("Signup success", response.data);
+            // router.push("/login");
+
+        } catch (error) {
+            console.log("Signup failed", error.message);
+
+            // toast.error(error.message);
+        }
+    }
+
+    useEffect(() => {
+        if (user.email.length > 0 && user.password.length > 0 && user.username.length > 0) {
+            setButtonDisabled(false);
+        }
+        else {
+            setButtonDisabled(true);
+        }
+
+    }, [user]
+
+
+    )
+
     return (
         <div className=' flex flex-col  items-center justify-center lg:flex-row '>
 
@@ -12,38 +53,53 @@ const page = () => {
                         Sign Up
                     </div>
 
-                    <div class=" shrink-0 w-full h-full">
-                        <form class=" card-body ">
+                    <div className=" shrink-0 w-full h-full">
+                        <div className=" card-body ">
 
-                            <div class="form-control">
+                            <div className="form-control">
 
-                                <label class="label">
-                                    <span class="label-text">username</span>
+                                <label htmlFor='username' className="label">
+                                    <span className="label-text">username</span>
                                 </label>
-                                <input type="text" placeholder="something unique" class="input input-bordered" required />
+
+                                <input id='username'
+                                    value={user.username}
+                                    onChange={(e) => setUser({ ...user, username: e.target.value })}
+                                    type="text" placeholder="something unique"
+                                    className="input input-bordered" required />
                             </div>
 
-                            <div class="form-control">
+                            <div className="form-control">
 
-                                <label class="label">
-                                    <span class="label-text">Email</span>
+                                <label className="label">
+                                    <span className="label-text">Email</span>
                                 </label>
-                                <input type="email" placeholder="we don't spam" class="input input-bordered" required />
+                                <input id='email' value={user.email}
+                                    onChange={(e) => setUser({ ...user, email: e.target.value })}
+
+                                    type="email" placeholder="we don't spam" className="input input-bordered" required />
                             </div>
 
-                            <div class="form-control">
-                                <label class="label">
-                                    <span class="label-text">Password</span>
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text">Password</span>
                                 </label>
-                                <input type="password" placeholder="keep it secret!!!" class="input input-bordered" required />
-                                <label class="label">
-                                    <a href="#" class="label-text-alt link link-hover">Forgot password?</a>
+                                <input id='password' value={user.password}
+                                    onChange={(e) => setUser({ ...user, password: e.target.value })}
+
+                                    type="password" placeholder="keep it secret!!!" className="input input-bordered" required />
+
+                                <label className="label">
+                                    <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                                 </label>
+
                             </div>
-                            <div class="form-control mt-6">
-                                <button class="btn btn-primary">Login</button>
+                            <div className="form-control mt-6">
+                                <button
+                                    onClick={onSignup}
+                                    className="btn btn-primary">{buttonDisabled ? "Fill the form" : "SignUp"}</button>
                             </div>
-                        </form>
+                        </div>
                     </div>
 
 
