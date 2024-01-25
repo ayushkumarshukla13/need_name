@@ -1,9 +1,10 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-// import { useRouter } from 'next/navigation'
+import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 const Page = () => {
-    // const router = useRouter();
+    const router = useRouter();
 
     const [user, setUser] = useState({
         email: "",
@@ -14,27 +15,56 @@ const Page = () => {
 
     const [buttonDisabled, setButtonDisabled] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [infoBtn, setInfoBtn] = useState(false);
+    const [infoBtn2, setInfoBtn2] = useState(false);
+    // const [success, setSuccess] = useState(false);
 
     const onSignup = async () => {
+        setLoading(true);
         try {
             setLoading(true);
             const response = await axios.post("/api/users/signup", user);
+            
             console.log("Signup success", response.data);
+            setSuccess(true);
 
-            // router.push("/login");
+            
 
         } catch (error) {
             console.log("Signup failed", error.message);
 
             // toast.error(error.message);
         }
+
+        finally
+        {
+            // setLoading(false);
+            router.push("/Incomplete");
+        }
     }
+    const validateEmail = (email) => {
+        // Simple email validation using a regular expression
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    };
+
+    const validatePassword = (password) => {
+        // Password validation: Min 8 characters and at least 1 special character
+        const passwordRegex = /^(?=.*[A-Za-z\d])(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+        return passwordRegex.test(password);
+    };
 
     useEffect(() => {
-        if (user.email.length > 0 && user.password.length > 0 && user.username.length > 0) {
+        setInfoBtn(user.password.length > 0);
+        setInfoBtn2(user.username.length > 0);
+
+        const isEmailValid = validateEmail(user.email);
+        const isPasswordValid = validatePassword(user.password);
+
+
+        if (user.username.length > 5 && isEmailValid && isPasswordValid) {
             setButtonDisabled(false);
-        }
-        else {
+        } else {
             setButtonDisabled(true);
         }
 
@@ -59,8 +89,12 @@ const Page = () => {
 
                             <div className="form-control">
 
-                                <label htmlFor='username' className="label">
-                                    <span className="label-text">username</span>
+                                <label htmlFor='username' className="label ">
+                                    <span className={`label-text flex justify-center items-center
+                                    ${infoBtn2 ? "tooltip" : ""} gap-2`}
+                                        data-tip="min 6 chars">username
+                                        <span><img src="/info.png" className={`w-4 ${infoBtn2 ? "block" : "hidden"}`} /></span>
+                                    </span>
                                 </label>
 
                                 <input id='username'
@@ -79,18 +113,32 @@ const Page = () => {
                                     onChange={(e) => setUser({ ...user, email: e.target.value })}
 
                                     type="email" placeholder="we don't spam" className="input input-bordered" required />
-                                
+
                             </div>
 
 
                             <div className="form-control">
+
                                 <label className="label">
-                                    <span className="label-text tooltip" data-tip="Min 8 Chars, 1 special Char">Password</span>
+
+                                    <span className={`label-text flex justify-center items-center gap-2 ${infoBtn ? "tooltip" : ""} `}
+                                        data-tip="Min 8 Chars, 1 special Char"
+
+                                    >Password
+                                        <span><img src="/info.png" className={`w-4 ${infoBtn ? "block" : "hidden"}`} /></span>
+                                    </span>
+
                                 </label>
+
+
+
                                 <input id='password' value={user.password}
                                     onChange={(e) => setUser({ ...user, password: e.target.value })}
-
-                                    type="password" placeholder="keep it secret!!!" className="input input-bordered" required />
+                                    type="password"
+                                    placeholder="keep it secret!!!"
+                                    className="input input-bordered"
+                                    // onFocus={showInfoBtn}
+                                    required />
 
                                 <label className="label">
                                     <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
@@ -98,9 +146,22 @@ const Page = () => {
 
                             </div>
                             <div className="form-control mt-6">
+
                                 <button
                                     onClick={onSignup}
-                                    className="btn btn-primary" disabled={buttonDisabled}>{buttonDisabled ? "Fill the form" : "SignUp"}</button>
+                                    className="btn btn-primary"
+                                    disabled={buttonDisabled}>
+
+                                    {loading ? (
+                                        <span className="loading loading-spinner loading-md"></span>
+                                    ) : (
+                                        buttonDisabled ? "Fill the form" : "SignUp"
+                                    )}
+                                    
+                                </button>
+
+
+
                             </div>
                         </div>
                     </div>

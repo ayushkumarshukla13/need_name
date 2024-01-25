@@ -2,7 +2,7 @@ import { Poppins } from 'next/font/google';  // Fix the import statement for Pop
 import './globals.css';
 
 // const inter = Inter({ subsets: ['latin'] });
-const poppins = Poppins({ subsets: ['latin'],weight:"700",display:'auto' });  // Initialize Poppins font
+const poppins = Poppins({ subsets: ['latin'],weight:"700" });  // Initialize Poppins font
 
 export const metadata = {
   title: 'Create Next App',
