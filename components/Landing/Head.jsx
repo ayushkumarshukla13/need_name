@@ -26,7 +26,10 @@ const Head = () => {
       <div className='w-2/6 flex justify-center items-center gap-4 '>
 
         <div className='mt-3'>
+        <Link href='/Login'>
         <LoginBtn />
+        </Link>
+        
         </div>
        
 
