@@ -17,6 +17,7 @@ const Page = () => {
 
 
     const [buttonDisabled, setButtonDisabled] = useState(false);
+    
     const [loading, setLoading] = useState(false);
     const [infoBtn, setInfoBtn] = useState(false);
     const [infoBtn2, setInfoBtn2] = useState(false);
