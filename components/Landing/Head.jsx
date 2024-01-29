@@ -4,7 +4,7 @@ import SignBtn from '../Buttons/SignBtn'
 import BtnTextGhost from '../Buttons/BtnTextGhost'
 import Link from 'next/link'
 
-const Lund = () => {
+const Head = () => {
   return (
     <div className='w-full flex '>
       
@@ -43,4 +43,4 @@ const Lund = () => {
   )
 }
 
-export default Lund
+export default Head

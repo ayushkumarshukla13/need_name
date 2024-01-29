@@ -1,5 +1,6 @@
 import { Poppins } from 'next/font/google';  // Fix the import statement for Poppins
 import './globals.css';
+import { Toaster } from 'react-hot-toast';
 
 // const inter = Inter({ subsets: ['latin'] });
 const poppins = Poppins({ subsets: ['latin'],weight:"700" });  // Initialize Poppins font
@@ -11,8 +12,11 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" data-theme="valentine">
-      <body className={` ${poppins.className}`}>{children}</body>
+    <html lang="en" data-theme="garden">
+      <body className={` ${poppins.className}`}>
+        <Toaster/>
+        {children}
+        </body>
     </html>
   );
 }

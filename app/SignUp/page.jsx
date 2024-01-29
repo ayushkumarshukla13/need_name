@@ -3,14 +3,17 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import toast, { Toaster } from 'react-hot-toast';
+import { NextResponse } from 'next/server'
+
 const Page = () => {
     const router = useRouter();
-
+    
     const [user, setUser] = useState({
         email: "",
         password: "",
         username: "",
-    })
+    });
 
 
     const [buttonDisabled, setButtonDisabled] = useState(false);
@@ -20,26 +23,46 @@ const Page = () => {
     // const [success, setSuccess] = useState(false);
 
     const onSignup = async () => {
-        setLoading(true);
+        
+        // toast.success("Welcome");
         try {
             setLoading(true);
             const response = await axios.post("/api/users/signup", user);
-            
+            toast.success("Signup Success");
             console.log("Signup success", response.data);
-            setSuccess(true);
+            // setSuccess(true);
 
+            router.push("/Incomplete");
+
+
+        } 
+        catch (error) 
+        {
+            setUser(
+                {
+                    email: "",
+                    password: "",
+                    username: "",
+                }
+            )
+            // Check for 409 status code
+            if (error.response && error.response.status === 409) {
+              const errorMessage = error.response.data.error; // Access the error message
+          
+              // Display the error message to the user
+              toast.error(errorMessage); // Use your preferred method for displaying errors
+            } else {
+              // Handle other errors as needed
+              console.error("Signup failed due to an unexpected error:", error);
+            }
+        } 
             
-
-        } catch (error) {
-            console.log("Signup failed", error.message);
-
-            // toast.error(error.message);
-        }
+        
 
         finally
         {
-            // setLoading(false);
-            router.push("/Incomplete");
+            setLoading(false);
+            // router.push("/Incomplete");
         }
     }
     const validateEmail = (email) => {
@@ -69,15 +92,13 @@ const Page = () => {
         }
 
     }, [user]
-
-
     )
 
     return (
         <div className=' flex flex-col  items-center justify-center lg:flex-row '>
 
             <div className=' left relative  w-full h-screen  lg:w-1/2 lg:h-screen  flex items-center justify-center '>
-
+               
                 <div className='   lg:w-4/5 lg:h-4/5 relative   flex flex-col items-center  rounded-2xl shadow-2xl bg-[#F1FAFF] '>
 
                     <div className='  mt-3   text-3xl lg:text-6xl text-[#001F3F]'>

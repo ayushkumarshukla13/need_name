@@ -1,6 +1,6 @@
 import BtnOutLarge from '@/components/Buttons/BtnOutLarge'
 import Foooter from '@/components/Landing/Foooter'
-import Lund from '@/components/Landing/Lund'
+import Head from '@/components/Landing/Head'
 import React from 'react'
 import router from 'next/navigation'
 
@@ -8,7 +8,7 @@ const Landing = () => {
   return (
     <div className='min-h-screen flex flex-col'>
         <div className='relative top-0 '>
-        <Lund/>
+        <Head/>
         </div>
         
 
@@ -45,6 +45,8 @@ const Landing = () => {
         </div>
         
         <div className='right w-1/2'>
+
+        {/* <img src="pic4.svg" alt="" /> */}
 
         </div>
         
