@@ -6,7 +6,7 @@ import Link from 'next/link'
 
 const Head = () => {
   return (
-    <div className='w-full flex '>
+    <div className='w-full flex'>
       
       <div className='w-2/6 flex justify-center items-center'>
           LOGO OR 
